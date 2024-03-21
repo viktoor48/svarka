@@ -8,9 +8,9 @@
 
 <script setup>
 import {computed, onMounted} from "vue";
-import {useProductStore} from "../stores";
+import {useStore} from "../stores";
 
-const store = useProductStore();
+const store = useStore();
 
 const countProducts = computed(() => {
   if (store.getCart) {

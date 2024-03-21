@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
+import { categories } from '~/constants/data'
 
-export const useProductStore = defineStore('product', {
+export const useStore = defineStore('product', {
     state: () => {
         return {
             products: [],
@@ -9,9 +10,21 @@ export const useProductStore = defineStore('product', {
             categories: [],
             filteredProducts: [],
             productsLimit: [],
+            categoriesTest: [],
+            currentCategory: null,
         }
     },
     actions: {
+        async fetchCategoriesTest() {
+            // Эмуляция запроса данных
+            setTimeout(() => {
+              // Загрузка данных после 2 секунд
+              this.categoriesTest = categories;
+            }, 2000);
+        },
+        async fetchCurrentCategory(category) {
+            this.currentCategory = categories.find((catName) => catName['category_name'] == category);
+        },
         updateCart(cart) {
             if (process.client) {
                 this.cart = cart;
@@ -115,6 +128,12 @@ export const useProductStore = defineStore('product', {
         },
     },
     getters: {
+        getCurrentCategory(state) {
+            return state.currentCategory;
+        },
+        getCategoriesTest(state) {
+            return state.categoriesTest;
+        },
         getProducts(state) {
             return state.products;
         },

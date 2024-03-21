@@ -35,10 +35,10 @@
 </template>
 
 <script setup>
-import {useProductStore} from "../stores";
+import {useStore} from "../stores";
 import {computed, onMounted} from "vue";
 
-const store = useProductStore();
+const store = useStore();
 
 const getCart = computed(() => {
   return store.getCart;

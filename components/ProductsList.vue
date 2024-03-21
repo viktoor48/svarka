@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { useProductStore } from "../stores";
+import { useStore } from "../stores";
 import {computed, onMounted, onUnmounted, ref} from "vue";
 
 const props = defineProps({
@@ -25,7 +25,7 @@ const props = defineProps({
 let isLoading = ref(false);
 const scrollComponent = ref(null);
 const step = 5;
-const store = useProductStore();
+const store = useStore();
 await store.fetchProductLimit(step);
 
 const getProducts = computed(() => {

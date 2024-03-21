@@ -12,6 +12,10 @@ module.exports = {
             gridTemplateColumns: {
                 'n': 'repeat(auto-fit,minmax(230px, 1fr))',
             },
+            colors: {
+                'default': '#36362A',
+                'yellow': '#eeee22',
+            },
         },
     },
     plugins: [],

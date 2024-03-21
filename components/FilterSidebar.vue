@@ -42,10 +42,10 @@
 </template>
 
 <script setup>
-import {useProductStore} from "../stores";
+import {useStore} from "../stores";
 import {onMounted, computed, ref} from "vue";
 
-const store = useProductStore();
+const store = useStore();
 const categoriesMap = new Map([
   ["all", 'Все'],
   ["electronics", 'Электороника'],

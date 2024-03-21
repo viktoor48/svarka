@@ -18,9 +18,9 @@
 </template>
 
 <script setup>
-import {useProductStore} from "../stores";
+import {useStore} from "../stores";
 
-const store = useProductStore();
+const store = useStore();
 const props = defineProps({
   product: {
     type: Object,
