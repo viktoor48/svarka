@@ -103,10 +103,11 @@ export const useStore = defineStore('product', {
             }
         },
         async fetchCategories() {
+            //рабочая
             try {
-                const response = await fetch('https://fakestoreapi.com/products/categories');
+                const response = await fetch('http://localhost:8000/api/categories');
                 const categories = await response.json();
-                console.log('categories');
+                console.log('categories', categories);
                 this.categories = categories;
             } catch (e) {
                 console.log(e);
