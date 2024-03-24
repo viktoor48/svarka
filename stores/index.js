@@ -4,100 +4,29 @@ import { categories } from '~/constants/data'
 export const useStore = defineStore('product', {
     state: () => {
         return {
-            products: [],
-            cart: [],
-            currentProduct: {},
             categories: [],
-            filteredProducts: [],
-            productsLimit: [],
-            categoriesTest: [],
             currentCategory: null,
+            articles: null,
+            currentAtricle: null,
         }
     },
     actions: {
-        async fetchCategoriesTest() {
-            // Эмуляция запроса данных
-            setTimeout(() => {
-              // Загрузка данных после 2 секунд
-              this.categoriesTest = categories;
-            }, 2000);
-        },
-        async fetchCurrentCategory(category) {
-            this.currentCategory = categories.find((catName) => catName['category_name'] == category);
-        },
-        updateCart(cart) {
-            if (process.client) {
-                this.cart = cart;
-            }
-        },
-        updateFilteredProducts(products) {
-            this.filteredProducts = products;
-        },
-        addToCart(item) {
-            if (this.cart == null) {
-                this.cart = [];
-            }
-            if (this.cart.length === 0) {
-                item.count = 1;
-                this.cart.push(item);
-                localStorage.setItem('cart', JSON.stringify(this.cart));
-                console.log(JSON.parse(localStorage.getItem('cart')));
-                return;
-            }
-
-            const product = this.cart.find((product) => {
-                if (product.id == item.id) {
-                    product.count++;
-                    return product;
-                }
-            })
-
-            if (!product) {
-                item.count = 1;
-                this.cart.push(item);
-            }
-
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-            console.log(JSON.parse(localStorage.getItem('cart')));
-        },
-        minesFromCart(item) {
-            this.cart.forEach(product => {
-                if (item.id == product.id) {
-                    product.count--;
-                }
-            });
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-        },
-        removeFromCart(item) {
-            this.cart = this.cart.filter((product) => product.id !== item.id)
-            localStorage.setItem('cart', JSON.stringify(this.cart));
-        },
-        async fetchProducts() {
+        async fetchCurrentCategory(id) {
+            //рабочая
             try {
-                const response = await fetch('https://fakestoreapi.com/products');
-                const data = await response.json();
-
-                this.products = data;
-            } catch (e) {
-                console.error(e);
-            }
-        },
-        async fetchProductLimit(limit) {
-            try {
-                const response = await fetch(`https://fakestoreapi.com/products?limit=${limit}`);
-                const data = await response.json();
-
-                this.productsLimit = data;
+                const response = await fetch(`http://localhost:8000/api/categoriess/${id}`);
+                const category = await response.json();
+                this.currentCategory = category;
             } catch (e) {
                 console.log(e);
             }
         },
-        async fetchCurrentProduct(id) {
+        async fetchCurrentArticle(categoryId, articleId) {
+            //рабочая
             try {
-                const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-                const product = await response.json();
-
-                this.currentProduct = product;
+                const response = await fetch(`http://localhost:8000/category/${categoryId}/article/${articleId}`);
+                const article = await response.json();
+                this.currentAtricle = article;
             } catch (e) {
                 console.log(e);
             }
@@ -105,26 +34,21 @@ export const useStore = defineStore('product', {
         async fetchCategories() {
             //рабочая
             try {
-                const response = await fetch('http://localhost:8000/api/categories');
+                const response = await fetch('http://localhost:8000/api/categoriess');
                 const categories = await response.json();
-                console.log('categories', categories);
                 this.categories = categories;
             } catch (e) {
                 console.log(e);
             }
         },
-        getCartFromStorage() {
-            const cart = localStorage.getItem('cart');
-
-            if (cart === null) {
-                return [];
-            }
-
+        async fetchArticles(id) {
+            //рабочая //контроллер
             try {
-                return JSON.parse(cart);
+                const response = await fetch(`http://localhost:8000/category/${id}`);
+                const articles = await response.json();
+                this.articles = articles;
             } catch (e) {
-                localStorage.removeItem('cart')
-                return [];
+                console.log(e);
             }
         },
     },
@@ -132,26 +56,14 @@ export const useStore = defineStore('product', {
         getCurrentCategory(state) {
             return state.currentCategory;
         },
-        getCategoriesTest(state) {
-            return state.categoriesTest;
-        },
-        getProducts(state) {
-            return state.products;
-        },
-        getCart(state) {
-            return state.cart;
-        },
-        getCurrentProduct(state) {
-            return state.currentProduct;
-        },
         getCategories(state) {
             return state.categories;
         },
-        getFilteredProducts(state) {
-            return state.filteredProducts;
+        getArticles(state) {
+            return state.articles;
         },
-        getProductsLimit(state) {
-            return state.productsLimit;
+        getCurrentArticle(state) {
+            return state.currentAtricle;
         },
     },
 })

@@ -10,8 +10,8 @@
               </NuxtLink>
             </div>
             <ul class="flex text-default">
-              <li class="ml-[20px] cursor-pointer"><NuxtLink to="/catalogProducts">Каталог</NuxtLink></li>
-              <li class="ml-[20px] cursor-pointer flex"><NuxtLink class="mr-[4px]" to="/cartPage">Корзина</NuxtLink><CartIcon/></li>
+              <li class="ml-[20px] cursor-pointer"><NuxtLink to="/">Войти</NuxtLink></li>
+              <li class="ml-[20px] cursor-pointer"><NuxtLink to="/">Выйти</NuxtLink></li>
             </ul>
           </nav>
         </div>
@@ -23,7 +23,7 @@
     <footer class="bg-yellow p-4 w-full">
       <div class="container">
         <div class="text-blue text-center">
-          Copyright © 2023 HubSpot, Inc.
+          Copyright © 2024 Welding, Inc.
         </div>
       </div>
     </footer>

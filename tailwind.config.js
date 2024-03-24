@@ -8,6 +8,11 @@ module.exports = {
         "./nuxt.config.{js,ts}",
     ],
     theme: {
+        fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            title: ['Unbounded', 'sans-serif'],
+            montserrat: ['Montserrat', 'sans-serif'],
+        },      
         extend: {
             gridTemplateColumns: {
                 'n': 'repeat(auto-fit,minmax(230px, 1fr))',

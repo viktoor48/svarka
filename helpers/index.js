@@ -16,4 +16,9 @@ function convertToSlug(str) {
         .replace(/-+$/, ''); // Удаляем дефисы с конца строки
 }
 
-export { convertToSlug }
+function getIdFromUrl(str) {
+    const parts = str.split('/');
+    return parts[parts.length - 1];
+}
+
+export { convertToSlug, getIdFromUrl }

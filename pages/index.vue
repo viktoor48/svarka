@@ -2,10 +2,10 @@
   <div class="mx-auto bg-[#f9faff] w-full">
     <div class="p-5 mx-auto">
       <div class="container">
-        <h2 class="text-2xl font-bold">Разделы</h2>
+        <h2 class="text-2xl font-bold">Категории</h2>
         <div v-if="loading">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-10">
-          <NuxtLink class="flex flex-col gap-5 hover:scale-105 duration-300" v-for="(category, ind) in getCategories" :key="ind" :to="`/category/${convertToSlug(category.name)}`">
+          <NuxtLink class="flex flex-col gap-5 hover:scale-105 duration-300" v-for="(category, ind) in getCategories" :key="ind" :to="`/category/${category.id}`">
             <div class="relative">
               <img
                 :src="category.image"
@@ -23,8 +23,7 @@
 
 <script setup>
 import { useStore } from "~/stores";
-import { onMounted } from "vue";
-import { convertToSlug } from "~/helpers/index";
+import { convertToSlug, getIdFromUrl } from "~/helpers/index";
 
 const store = useStore();
 const loading = ref(true);
@@ -34,11 +33,5 @@ loading.value = false;
 
 const getCategories = computed(() => {
   return store.getCategories['hydra:member'];
-});
-
-onMounted(() => {
-  const cart = JSON.parse(localStorage.getItem("cart"));
-  store.updateCart(cart);
-  store.fetchCategoriesTest;
 });
 </script>
