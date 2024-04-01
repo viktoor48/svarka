@@ -10,8 +10,8 @@
               </NuxtLink>
             </div>
             <ul class="flex text-default">
-              <li class="ml-[20px] cursor-pointer"><NuxtLink to="/">Войти</NuxtLink></li>
-              <li class="ml-[20px] cursor-pointer"><NuxtLink to="/">Выйти</NuxtLink></li>
+              <li v-if="!getUser" class="ml-[20px] cursor-pointer"><NuxtLink @click="vfm.open('authorization')">Войти</NuxtLink></li>
+              <li v-else class="ml-[20px] cursor-pointer"><NuxtLink @click="logout">Выйти</NuxtLink></li>
             </ul>
           </nav>
         </div>
@@ -31,5 +31,19 @@
 </template>
 
 <script setup>
+import { useStore } from '~/stores';
+import { useVfm } from 'vue-final-modal';
+
+const store = useStore();
+
+const vfm = useVfm();
+
+const getUser = computed(() => {
+  return store.getUser;
+});
+
+function logout() {
+  store.logout();
+}
 
 </script>

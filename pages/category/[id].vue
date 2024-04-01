@@ -46,7 +46,6 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useStore } from "~/stores";
-import createError from "http-errors";
 
 const isLoading = ref(true);
 

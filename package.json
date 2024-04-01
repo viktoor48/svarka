@@ -9,15 +9,17 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^0.7.1",
-    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@nuxt/devtools": "^0.7.6",
+    "@nuxtjs/tailwindcss": "^6.11.4",
     "@pinia/nuxt": "^0.4.11",
-    "@types/node": "^18",
-    "nuxt": "^3.6.2"
+    "@types/node": "^18.19.26",
+    "nuxt": "^3.11.1"
   },
   "dependencies": {
+    "@vee-validate/nuxt": "^4.12.6",
     "http-errors": "^2.0.0",
     "nouislider": "^15.7.1",
-    "pinia": "^2.1.4"
+    "pinia": "^2.1.7",
+    "vue-final-modal": "^4.5.4"
   }
 }

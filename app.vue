@@ -1,5 +1,5 @@
 <script setup>
-// import { ModalsContainer } from 'vue-final-modal'
+import { ModalsContainer } from 'vue-final-modal'
 import { useIsScrollBlocked } from '~/composables/useState.js'
 
 const isScrollBlocked = useIsScrollBlocked()
@@ -15,7 +15,7 @@ const isScrollBlocked = useIsScrollBlocked()
   >
     <NuxtLoadingIndicator color="#B8282B" :height="2" />
     <NuxtPage />
-    <!-- <Modals />
-    <ModalsContainer /> -->
+    <Modals />
+    <ModalsContainer />
   </NuxtLayout>
 </template>
