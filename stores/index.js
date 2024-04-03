@@ -77,12 +77,14 @@ export const useStore = defineStore('product', {
                 
                 // Сохраняем пользователя в хранилище
                 this.user = user;
+                localStorage.setItem('user', JSON.stringify(this.user));
             } catch (error) {
                 console.error('Error:', error);
             }
         },
         logout() {
             this.user = null;
+            localStorage.removeItem('user');
             console.log(this.user)
         },
     },
