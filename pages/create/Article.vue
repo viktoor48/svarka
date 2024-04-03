@@ -28,7 +28,7 @@
             <form id="first-block" class="flex flex-col gap-5">
                 <textarea v-model="article.text" class="border border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"/>
                 <div>
-                    <input type="file" class="" name="img-first-block" @change="handleImageUpload($event)">
+                    <input type="file" class="" name="img-first-block" @change="uploadImage($event)">
                     <!-- Загрузка картинки в папку public/assets/images/articles-->
                 </div>
                 <!-- превью картинки -->
@@ -45,7 +45,7 @@
                         Загрузите картинку
                     </label>
                     <div>
-                        <input type="file" :name="`block-${index}`">
+                        <input type="file" :name="`block-${index}`" @change="handleBlockImageUpload($event, index)">
                         <!-- загрузка картинки в папку public/assets/images/blocks -->
                     </div>
                     <!-- превью картинки -->
@@ -137,6 +137,7 @@ const handleImageUpload = (event) => {
 // Обработчик загрузки изображения для блока
 const handleBlockImageUpload = (event, index) => {
   const file = event.target.files[0];
+  console.log(file);
   if (file) {
     const reader = new FileReader();
     reader.onload = () => {
@@ -144,6 +145,16 @@ const handleBlockImageUpload = (event, index) => {
     };
     reader.readAsDataURL(file);
   }
+};
+
+//рабочее временное решение
+const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const directoryHandle = await window.showDirectoryPicker();
+    const fileHandle = await directoryHandle.getFileHandle(file.name, { create: true });
+    const writable = await fileHandle.createWritable();
+    await writable.write(file);
+    await writable.close();
 };
 </script>
 
