@@ -14,11 +14,11 @@
           <div class="text-base md:text-xl lg:text-2xl font-bold">
             {{ getCurrentArticle.article.name }}
           </div>
-          <div class="flex justify-center">
-            <div class="max-w-[990px]">
+          <div class="flex justify-center max-w-[990px]">
+            <div class="w-full">
               <img
                 :src="getCurrentArticle.article.image"
-                class="rounded-xl"
+                class="rounded-xl w-full"
                 alt=""
               />
             </div>
@@ -39,9 +39,9 @@
             <div v-if="block.type === 'text'" class="text-base md:text-lg">
               {{ block.content }}
             </div>
-            <div v-else class="flex justify-center">
-              <div class="max-w-[990px]">
-                <img :src="block.content" class="rounded-xl" alt="" />
+            <div v-else class="flex justify-center max-w-[990px]">
+              <div class="w-full">
+                <img :src="block.content" class="rounded-xl w-full" alt="" />
               </div>
             </div>
           </div>

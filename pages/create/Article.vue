@@ -40,35 +40,17 @@ const getCategorys = computed(() => {
 
 const createBlock = (type) => {
   if (type === "text") {
-    blocks.value.push({ type: "text", content: "Новый текстовый блок", title: '', });
+    blocks.value.push({
+      type: "text",
+      content: "",
+      title: "",
+    });
   } else if (type === "image") {
-    blocks.value.push({ type: "image", content: "Путь к изображению", title: '', });
-  }
-};
-
-// Обработчик загрузки изображения для основного блока
-const handleImageUpload = (event) => {
-  const file = event.target.files[0];
-  console.log(file);
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      article.value.image = reader.result;
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
-// Обработчик загрузки изображения для блока
-const handleBlockImageUpload = (event, index) => {
-  const file = event.target.files[0];
-  console.log(file);
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      blocks.value[index].image = reader.result;
-    };
-    reader.readAsDataURL(file);
+    blocks.value.push({
+      type: "image",
+      content: "",
+      title: "",
+    });
   }
 };
 
@@ -97,21 +79,22 @@ const uploadImageBlock = async (event, index) => {
   await writable.write(file);
   await writable.close();
   console.log("Имя файла:", fileHandle.name);
-  blocks.value[index].image = `/assets/images/forNewArticles/${fileHandle.name}`;
+  blocks.value[index].content = `/assets/images/forNewArticles/${fileHandle.name}`;
 };
 
 const save = async () => {
   let formData = {
+    date: '07.04.2024',
+    userId: getUser.value.id,
     categoryId: selectedCategory.value,
     article: article.value,
     blocks: blocks.value,
-  }
-  
+  };
+
   console.log(formData);
-  const response = await store.createNewArticle(formData);
-  console.log(response);
+  await store.createNewArticle(formData);
   await router.push("/");
-}
+};
 </script>
 
 <template>
@@ -121,7 +104,7 @@ const save = async () => {
       <div v-else class="container">
         <h2 class="text-2xl font-bold">Создание новой записи</h2>
         <div class="flex flex-col gap-2 mt-5">
-          <label class="text-lg" for="category">Выберите категорию</label>
+          <div class="text-lg" for="category">Выберите категорию</div>
           <div>
             <select
               v-if="getCategorys"
@@ -143,7 +126,7 @@ const save = async () => {
             <div class="flex items-baseline">
               <span class="text-orange-300 text-5xl">1</span>-й блок
             </div>
-            <form id="first-block" class="flex flex-col gap-5">
+            <div id="first-block" class="flex flex-col gap-5">
               <textarea
                 v-model="article.text"
                 class="border border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
@@ -151,7 +134,6 @@ const save = async () => {
               <div>
                 <input
                   type="file"
-                  class=""
                   name="img-first-block"
                   @change="uploadImageArticle($event)"
                 />
@@ -159,7 +141,7 @@ const save = async () => {
               <div>
                 <img v-show="article.image" :src="article.image" />
               </div>
-            </form>
+            </div>
 
             <div class="flex flex-col gap-5">
               <div v-for="(block, index) in blocks" :key="index">
@@ -168,8 +150,13 @@ const save = async () => {
                   >-й блок
                 </div>
                 <div v-if="block.type === 'text'" class="flex flex-col gap-3">
-                  <label :for="`block-title-${index}`">Заголовок</label>
-                  <input type="text" :name="`block-title-${index}`" v-model="block.title" class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none">
+                  <div>Заголовок</div>
+                  <input
+                    type="text"
+                    :name="`block-title-${index}`"
+                    v-model="block.title"
+                    class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
+                  />
                   <textarea
                     class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
                     cols="30"
@@ -178,8 +165,13 @@ const save = async () => {
                   ></textarea>
                 </div>
                 <div v-else class="flex flex-col gap-3">
-                  <label :for="`block-title-${index}`">Заголовок</label>
-                  <input type="text" :name="`block-title-${index}`" v-model="block.title" class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none">
+                  <div>Заголовок</div>
+                  <input
+                    type="text"
+                    :name="`block-title-${index}`"
+                    v-model="block.title"
+                    class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
+                  />
                   <label :for="`block-${index}`"> Загрузите картинку </label>
                   <div>
                     <input
@@ -189,7 +181,7 @@ const save = async () => {
                     />
                   </div>
                   <div>
-                    <img v-show="block.image" :src="block.image" />
+                    <img v-show="block.content" :src="block.content" />
                   </div>
                 </div>
               </div>
@@ -208,7 +200,7 @@ const save = async () => {
                 Создать блок с картинкой
               </button>
               <button
-                @click="save()"
+                @click="save"
                 class="py-2 px-5 text-lg bg-orange-300 rounded-2xl duration-300 hover:scale-105"
               >
                 Сохранить
