@@ -15,7 +15,7 @@ export const useStore = defineStore("product", {
       //рабочая
       try {
         const response = await fetch(
-          `http://localhost:8000/api/categories/${id}`
+          `http://localhost:8000/api/categoriess/${id}`
         );
         const category = await response.json();
         this.currentCategory = category;
@@ -38,7 +38,7 @@ export const useStore = defineStore("product", {
     async fetchCategories() {
       //рабочая
       try {
-        const response = await fetch("http://localhost:8000/api/categories");
+        const response = await fetch("http://localhost:8000/api/categoriess");
         const categories = await response.json();
         this.categories = categories;
       } catch (e) {
@@ -111,6 +111,25 @@ export const useStore = defineStore("product", {
         localStorage.setItem("user", JSON.stringify(this.user));
       } catch (error) {
         console.error("Error:", error);
+      }
+    },
+    async deleteArticle(articleId) {
+      try {
+        const response = await fetch(`http://localhost:8000/delete/article/${articleId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to delete article');
+        }
+    
+        return true;
+      } catch (error) {
+        console.error('Error deleting article:', error.message);
+        return false;
       }
     },
     logout() {
