@@ -2,6 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { useStore } from "~/stores";
 import { useRouter } from "vue-router";
+import { getDate } from "~/helpers";
 
 const router = useRouter();
 const store = useStore();
@@ -54,6 +55,10 @@ const createBlock = (type) => {
   }
 };
 
+const deleteBlock = (index) => {
+  blocks.value.splice(index,1);
+};
+
 //  /assets/images/articles/name
 const uploadImageArticle = async (event) => {
   const file = event.target.files[0];
@@ -79,12 +84,16 @@ const uploadImageBlock = async (event, index) => {
   await writable.write(file);
   await writable.close();
   console.log("Имя файла:", fileHandle.name);
-  blocks.value[index].content = `/assets/images/forNewArticles/${fileHandle.name}`;
+  blocks.value[
+    index
+  ].content = `/assets/images/forNewArticles/${fileHandle.name}`;
 };
+
+
 
 const save = async () => {
   let formData = {
-    date: '07.04.2024',
+    date: getDate(),
     userId: getUser.value.id,
     categoryId: selectedCategory.value,
     article: article.value,
@@ -145,9 +154,14 @@ const save = async () => {
 
             <div class="flex flex-col gap-5">
               <div v-for="(block, index) in blocks" :key="index">
-                <div class="flex items-baseline">
-                  <span class="text-orange-300 text-5xl">{{ index + 2 }}</span
-                  >-й блок
+                <div class="flex items-baseline justify-between">
+                  <div>
+                    <span class="text-orange-300 text-5xl">{{ index + 2 }}</span
+                    >-й блок
+                  </div>
+                  <div>
+                    <button @click="deleteBlock(index)" class="py-2 px-5 text-lg bg-orange-300 rounded-2xl duration-300 hover:scale-105">Удалить</button>
+                  </div>
                 </div>
                 <div v-if="block.type === 'text'" class="flex flex-col gap-3">
                   <div>Заголовок</div>

@@ -15,7 +15,7 @@ export const useStore = defineStore("product", {
       //рабочая
       try {
         const response = await fetch(
-          `http://localhost:8000/api/categoriess/${id}`
+          `http://localhost:8000/api/categories/${id}`
         );
         const category = await response.json();
         this.currentCategory = category;
@@ -38,7 +38,7 @@ export const useStore = defineStore("product", {
     async fetchCategories() {
       //рабочая
       try {
-        const response = await fetch("http://localhost:8000/api/categoriess");
+        const response = await fetch("http://localhost:8000/api/categories");
         const categories = await response.json();
         this.categories = categories;
       } catch (e) {

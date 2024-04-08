@@ -21,4 +21,10 @@ function getIdFromUrl(str) {
     return parts[parts.length - 1];
 }
 
-export { convertToSlug, getIdFromUrl }
+function getDate() {
+    let currentDate = new Date();
+
+    return currentDate.toISOString().split('T')[0];
+}
+
+export { convertToSlug, getIdFromUrl, getDate }
