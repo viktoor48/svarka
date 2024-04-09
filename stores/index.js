@@ -8,6 +8,7 @@ export const useStore = defineStore("product", {
       currentCategory: null,
       articles: null,
       currentAtricle: null,
+      categoryId: localStorage.getItem("categoryId") || null,
     };
   },
   actions: {
@@ -137,6 +138,10 @@ export const useStore = defineStore("product", {
       localStorage.removeItem("user");
       console.log(this.user);
     },
+    setCategoryId(id) {
+      this.categoryId = id;
+      localStorage.setItem('categoryId', id);
+    },
   },
   getters: {
     getCurrentCategory(state) {
@@ -153,6 +158,9 @@ export const useStore = defineStore("product", {
     },
     getUser(state) {
       return state.user;
+    },
+    getCategoryId(state) {
+      return state.categoryId;
     },
   },
 });
