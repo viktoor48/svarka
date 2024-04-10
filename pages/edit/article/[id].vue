@@ -8,7 +8,6 @@ const router = useRouter();
 const store = useStore();
 
 const { id } = useRoute().params;
-console.log(id);
 
 const isLoading = ref(true);
 const article = ref({ text: "Текст блока", image: null });
@@ -81,7 +80,6 @@ const deleteBlock = (index) => {
   blocks.value.splice(index, 1);
 };
 
-//  /assets/images/articles/name
 const uploadImageArticle = async (event) => {
   const file = event.target.files[0];
   const directoryHandle = await window.showDirectoryPicker(); //чтение файлов
@@ -95,7 +93,6 @@ const uploadImageArticle = async (event) => {
   article.value.image = `/assets/images/forNewArticles/${fileHandle.name}`;
 };
 
-// /assets/images/blocks/name
 const uploadImageBlock = async (event, index) => {
   const file = event.target.files[0];
   const directoryHandle = await window.showDirectoryPicker(); //чтение файлов
@@ -115,14 +112,20 @@ const save = async () => {
   let formData = {
     date: getDate(),
     userId: getUser.value.id,
-    categoryId: selectedCategory.value,
+    categoryId: categoryId,
     article: article.value,
     blocks: blocks.value,
   };
 
   console.log(formData);
-  await store.createNewArticle(formData);
-  await router.push("/");
+  const isEdited = await store.editArticle(id, formData);
+
+  if (isEdited) {
+    alert("Статья успешно изменена");
+    await router.push("/");
+  } else {
+    alert("Не удалось изменить данную статью");
+  }
 };
 </script>
 

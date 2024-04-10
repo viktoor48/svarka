@@ -68,7 +68,7 @@ export const useStore = defineStore("product", {
           body: JSON.stringify(formData),
         });
 
-        console.log('response:');
+        console.log("response:");
         console.log(response);
 
         if (!response.ok) {
@@ -81,6 +81,31 @@ export const useStore = defineStore("product", {
       } catch (error) {
         console.error("Ошибка при сохранении данных:", error);
         throw error;
+      }
+    },
+    async editArticle(articleId, formData) {
+      try {
+        const url = `http://localhost:8000/edit/article/${articleId}`;
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        console.log(response);
+
+        if (!response.ok) {
+          // Если ответ не успешен, обработка ошибки
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return true;
+      } catch (error) {
+        console.error("Ошибка при сохранении данных:", error.message);
+        return false;
       }
     },
     async onLogin(email, password) {
@@ -116,20 +141,23 @@ export const useStore = defineStore("product", {
     },
     async deleteArticle(articleId) {
       try {
-        const response = await fetch(`http://localhost:8000/delete/article/${articleId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-    
+        const response = await fetch(
+          `http://localhost:8000/delete/article/${articleId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
         if (!response.ok) {
-          throw new Error('Failed to delete article');
+          throw new Error("Failed to delete article");
         }
-    
+
         return true;
       } catch (error) {
-        console.error('Error deleting article:', error.message);
+        console.error("Error deleting article:", error.message);
         return false;
       }
     },
@@ -140,7 +168,7 @@ export const useStore = defineStore("product", {
     },
     setCategoryId(id) {
       this.categoryId = id;
-      localStorage.setItem('categoryId', id);
+      localStorage.setItem("categoryId", id);
     },
   },
   getters: {
