@@ -10,10 +10,12 @@
               </NuxtLink>
             </div>
             <ul v-if="!getUser" class="flex text-default">
+              <li class="ml-[20px] cursor-pointer"><NuxtLink href="https://telegram.im/@roshchupkinnn" target="_blank">Связаться с нами</NuxtLink></li>
               <li class="ml-[20px] cursor-pointer"><NuxtLink @click="vfm.open('authorization')">Войти</NuxtLink></li>
             </ul>
             <ul v-else class="flex text-default">
-              <li class="ml-[20px] cursor-pointer"><NuxtLink to="/create/Article">Создать запись</NuxtLink></li>
+              <li v-if="getUser.id == 2" class="ml-[20px] cursor-pointer"><NuxtLink to="/create/Article">Создать запись</NuxtLink></li>
+              <li v-if="getUser.id != 2" class="ml-[20px] cursor-pointer"><NuxtLink to="/addReclame">Добавить рекламу</NuxtLink></li>
               <li class="ml-[20px] cursor-pointer"><NuxtLink @click="logout">Выйти</NuxtLink></li>
             </ul>
           </nav>
@@ -44,6 +46,8 @@ const vfm = useVfm();
 const getUser = computed(() => {
   return store.getUser;
 });
+
+console.log(getUser);
 
 function logout() {
   store.logout();

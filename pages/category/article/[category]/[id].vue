@@ -46,6 +46,9 @@
             </div>
           </div>
         </div>
+        <div v-if="getCurrentArticle.article.reclame" class="p-10 bg-yellow rounded-2xl">
+          <div class="text-lg">Данный товар можно приобрести <NuxtLink :to="getCurrentArticle.article.reclame.link" target="_blank" class="text-blue-500 uppercase">здесь</NuxtLink></div>
+        </div>
       </div>
     </div>
   </div>

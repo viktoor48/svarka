@@ -108,6 +108,31 @@ export const useStore = defineStore("product", {
         return false;
       }
     },
+    async addReclame(data) {
+      try {
+        const url = "http://localhost:8000/add/reclame";
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        console.log(response);
+
+        if (!response.ok) {
+          // Если ответ не успешен, обработка ошибки
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const responseData = await response.json(); // Парсим ответ как JSON
+        return true;
+      } catch (e) {
+        console.error(e);
+      }
+    },
     async onLogin(email, password) {
       try {
         const url = "http://localhost:8000/login";
