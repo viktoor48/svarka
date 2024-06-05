@@ -110,7 +110,7 @@ export const useStore = defineStore("product", {
     },
     async addReclame(data) {
       try {
-        const url = "http://localhost:8000/add/reclame";
+        const url = "http://79.174.86.226/add/reclame";
 
         const response = await fetch(url, {
           method: "POST",
