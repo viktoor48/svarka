@@ -16,7 +16,7 @@ export const useStore = defineStore("product", {
       //рабочая
       try {
         const response = await fetch(
-          `http://localhost:8000/api/categoriess/${id}`
+          `http://79.174.86.226/api/categoriess/${id}`
         );
         const category = await response.json();
         this.currentCategory = category;
@@ -28,7 +28,7 @@ export const useStore = defineStore("product", {
       //рабочая
       try {
         const response = await fetch(
-          `http://localhost:8000/category/${categoryId}/article/${articleId}`
+          `http://79.174.86.226/category/${categoryId}/article/${articleId}`
         );
         const article = await response.json();
         this.currentAtricle = article;
@@ -39,7 +39,7 @@ export const useStore = defineStore("product", {
     async fetchCategories() {
       //рабочая
       try {
-        const response = await fetch("http://localhost:8000/api/categoriess");
+        const response = await fetch("http://79.174.86.226/api/categoriess");
         const categories = await response.json();
         this.categories = categories;
       } catch (e) {
@@ -49,7 +49,7 @@ export const useStore = defineStore("product", {
     async fetchArticles(id) {
       //рабочая //контроллер
       try {
-        const response = await fetch(`http://localhost:8000/category/${id}`);
+        const response = await fetch(`http://79.174.86.226/category/${id}`);
         const articles = await response.json();
         this.articles = articles;
       } catch (e) {
@@ -58,7 +58,7 @@ export const useStore = defineStore("product", {
     },
     async createNewArticle(formData) {
       try {
-        const url = "http://localhost:8000/create/new/article";
+        const url = "http://79.174.86.226/create/new/article";
 
         const response = await fetch(url, {
           method: "POST",
@@ -85,7 +85,7 @@ export const useStore = defineStore("product", {
     },
     async editArticle(articleId, formData) {
       try {
-        const url = `http://localhost:8000/edit/article/${articleId}`;
+        const url = `http://79.174.86.226/edit/article/${articleId}`;
 
         const response = await fetch(url, {
           method: "POST",
@@ -135,7 +135,7 @@ export const useStore = defineStore("product", {
     },
     async onLogin(email, password) {
       try {
-        const url = "http://localhost:8000/login";
+        const url = "http://79.174.86.226/login";
         const data = {
           email: email,
           password: password,
@@ -167,7 +167,7 @@ export const useStore = defineStore("product", {
     async deleteArticle(articleId) {
       try {
         const response = await fetch(
-          `http://localhost:8000/delete/article/${articleId}`,
+          `http://79.174.86.226/delete/article/${articleId}`,
           {
             method: "DELETE",
             headers: {
