@@ -8,7 +8,29 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vee-validate/nuxt',
+    'yandex-metrika-module-nuxt3',
+    '@nuxtjs/google-fonts',
   ],
+  yandexMetrika: {
+    id: '97543801',
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    webvisor: true,
+  },
+  googleFonts: {
+    families: {
+      Inter: {
+        wght: [400, 600, 700],
+      },
+      Unbounded: {
+        wght: [400, 600, 700, 800],
+      },
+      Montserrat: {
+        wght: [400, 500, 700],
+      },
+    },
+  },
   vite: {
     server: {
       fs: {
@@ -16,4 +38,9 @@ export default defineNuxtConfig({
       }
     },
   },
+  runtimeConfig: {
+    public: {
+      baseUrl: process.env.BASE_URL || 'http://79.174.86.226'
+    }
+  }
 })

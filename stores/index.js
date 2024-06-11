@@ -15,8 +15,9 @@ export const useStore = defineStore("product", {
     async fetchCurrentCategory(id) {
       //рабочая
       try {
+        const apiURL = useRuntimeConfig().public.baseUrl;
         const response = await fetch(
-          `http://79.174.86.226/api/categoriess/${id}`
+          `${apiURL}/api/categoriess/${id}`
         );
         const category = await response.json();
         this.currentCategory = category;
@@ -27,8 +28,9 @@ export const useStore = defineStore("product", {
     async fetchCurrentArticle(categoryId, articleId) {
       //рабочая
       try {
+        const apiURL = useRuntimeConfig().public.baseUrl;
         const response = await fetch(
-          `http://79.174.86.226/category/${categoryId}/article/${articleId}`
+          `${apiURL}/category/${categoryId}/article/${articleId}`
         );
         const article = await response.json();
         this.currentAtricle = article;
@@ -39,7 +41,8 @@ export const useStore = defineStore("product", {
     async fetchCategories() {
       //рабочая
       try {
-        const response = await fetch("http://79.174.86.226/api/categoriess");
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const response = await fetch(`${apiURL}/api/categoriess`);
         const categories = await response.json();
         this.categories = categories;
       } catch (e) {
@@ -49,7 +52,8 @@ export const useStore = defineStore("product", {
     async fetchArticles(id) {
       //рабочая //контроллер
       try {
-        const response = await fetch(`http://79.174.86.226/category/${id}`);
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const response = await fetch(`${apiURL}/category/${id}`);
         const articles = await response.json();
         this.articles = articles;
       } catch (e) {
@@ -58,7 +62,8 @@ export const useStore = defineStore("product", {
     },
     async createNewArticle(formData) {
       try {
-        const url = "http://79.174.86.226/create/new/article";
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const url = `${apiURL}/create/new/article`;
 
         const response = await fetch(url, {
           method: "POST",
@@ -85,7 +90,8 @@ export const useStore = defineStore("product", {
     },
     async editArticle(articleId, formData) {
       try {
-        const url = `http://79.174.86.226/edit/article/${articleId}`;
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const url = `${apiURL}/edit/article/${articleId}`;
 
         const response = await fetch(url, {
           method: "POST",
@@ -110,7 +116,8 @@ export const useStore = defineStore("product", {
     },
     async addReclame(data) {
       try {
-        const url = "http://79.174.86.226/add/reclame";
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const url = `${apiURL}/add/reclame`;
 
         const response = await fetch(url, {
           method: "POST",
@@ -135,7 +142,8 @@ export const useStore = defineStore("product", {
     },
     async onLogin(email, password) {
       try {
-        const url = "http://79.174.86.226/login";
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const url = `${apiURL}/login`;
         const data = {
           email: email,
           password: password,
@@ -166,8 +174,9 @@ export const useStore = defineStore("product", {
     },
     async deleteArticle(articleId) {
       try {
+        const apiURL = useRuntimeConfig().public.baseUrl;
         const response = await fetch(
-          `http://79.174.86.226/delete/article/${articleId}`,
+          `${apiURL}/delete/article/${articleId}`,
           {
             method: "DELETE",
             headers: {

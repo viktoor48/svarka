@@ -60,7 +60,7 @@
                   <div class="text-black font-bold lg:text-2xl">
                     {{ article.name }}
                   </div>
-                  <div class="mt-auto">{{ article.date }}</div>
+                  <div class="mt-auto">{{ formatDateToRussian(article.date) }}</div>
                 </div>
               </div>
               <div v-if="choosedArticle != null">
@@ -115,7 +115,7 @@
 <script setup>
 import { useStore } from "~/stores";
 import { useRouter } from "vue-router";
-import { convertToSlug, getIdFromUrl } from "~/helpers/index";
+import { convertToSlug, getIdFromUrl, formatDateToRussian } from "~/helpers/index";
 
 const store = useStore();
 const router = useRouter();

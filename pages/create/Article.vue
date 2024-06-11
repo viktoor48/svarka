@@ -89,8 +89,6 @@ const uploadImageBlock = async (event, index) => {
   ].content = `/assets/images/forNewArticles/${fileHandle.name}`;
 };
 
-
-
 const save = async () => {
   let formData = {
     date: getDate(),

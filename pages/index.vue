@@ -2,6 +2,19 @@
   <div class="mx-auto bg-[#f9faff] w-full">
     <div class="p-5 mx-auto">
       <div class="container">
+        <div class="py-5 flex flex-col gap-5">
+          <div>
+            <h1 class="text-3xl font-bold font-montserrat">
+              Добро пожаловать на наш сайт о сварке!
+            </h1>
+          </div>
+          <div>
+            <p class="text-2xl font-bold">О нашем сайте</p>
+          </div>
+          <div>
+            <p class="text-base leading-7">Мы рады приветствовать вас на нашем информационном ресурсе, посвященном всем аспектам сварки. Здесь вы найдете исчерпывающую информацию о различных методах сварки, их применении, оборудовании и технологиях. Наш сайт создан для профессионалов, новичков и всех, кто интересуется сваркой.</p>
+          </div>
+        </div>
         <h2 class="text-2xl font-bold">Категории</h2>
         <div v-if="loading">Loading...</div>
         <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-10">

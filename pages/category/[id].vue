@@ -32,7 +32,7 @@
               <div class="text-black font-bold lg:text-2xl">
                 {{ article.name }}
               </div>
-              <div class="mt-autoa">{{ article.date }}</div>
+              <div class="mt-auto">{{ formatDateToRussian(article.date) }}</div>
             </div>
             <NuxtLink v-if="getUser" :to="`/edit/article/${article.id}`" class="absolute z-10 right-11 top-4 w-6 trash">
               <svg
@@ -126,6 +126,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useStore } from "~/stores";
+import { formatDateToRussian } from "~/helpers";
 
 const isLoading = ref(true);
 

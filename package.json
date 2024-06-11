@@ -16,10 +16,12 @@
     "nuxt": "^3.11.1"
   },
   "dependencies": {
+    "@nuxtjs/google-fonts": "^3.2.0",
     "@vee-validate/nuxt": "^4.12.6",
     "http-errors": "^2.0.0",
     "nouislider": "^15.7.1",
     "pinia": "^2.1.7",
-    "vue-final-modal": "^4.5.4"
+    "vue-final-modal": "^4.5.4",
+    "yandex-metrika-module-nuxt3": "^1.5.3"
   }
 }

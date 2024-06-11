@@ -27,4 +27,9 @@ function getDate() {
     return currentDate.toISOString().split('T')[0];
 }
 
-export { convertToSlug, getIdFromUrl, getDate }
+function formatDateToRussian(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+}
+
+export { convertToSlug, getIdFromUrl, getDate, formatDateToRussian }
