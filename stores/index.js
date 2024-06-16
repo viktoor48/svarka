@@ -9,6 +9,7 @@ export const useStore = defineStore("product", {
       articles: null,
       currentAtricle: null,
       categoryId: localStorage.getItem("categoryId") || null,
+      blocks: [],
     };
   },
   actions: {
@@ -45,6 +46,16 @@ export const useStore = defineStore("product", {
         const response = await fetch(`${apiURL}/api/categoriess`);
         const categories = await response.json();
         this.categories = categories;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async fetchBlocks(id) {
+      try {
+        const apiURL = useRuntimeConfig().public.baseUrl;
+        const response = await fetch(`${apiURL}/article/${id}/blocks`);
+        const blocks = await response.json();
+        this.blocks = blocks;
       } catch (e) {
         console.log(e);
       }
@@ -223,6 +234,9 @@ export const useStore = defineStore("product", {
     },
     getCategoryId(state) {
       return state.categoryId;
+    },
+    getBlocks(state) {
+      return state.blocks;
     },
   },
 });

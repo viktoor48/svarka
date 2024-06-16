@@ -45,9 +45,55 @@
               </div>
             </div>
           </div>
+          <div
+            v-if="getCurrentArticle.article.reclame?.block == block.id"
+            class="p-2 rounded-2xl"
+          >
+            <div v-if="!getCurrentArticle.article.reclame.text" class="text-lg">
+              Данный товар можно приобрести
+              <NuxtLink
+                :to="getCurrentArticle.article.reclame.link"
+                target="_blank"
+                class="text-blue-500 uppercase"
+                >здесь</NuxtLink
+              >
+            </div>
+            <div v-else class="text-lg">
+              <NuxtLink
+                :to="getCurrentArticle.article.reclame.link"
+                target="_blank"
+                class="text-blue-500 uppercase"
+              >
+                {{ getCurrentArticle.article.reclame.text }}
+              </NuxtLink>
+            </div>
+          </div>
         </div>
-        <div v-if="getCurrentArticle.article.reclame" class="p-10 bg-yellow rounded-2xl">
-          <div class="text-lg">Данный товар можно приобрести <NuxtLink :to="getCurrentArticle.article.reclame.link" target="_blank" class="text-blue-500 uppercase">здесь</NuxtLink></div>
+        <div
+          v-if="
+            getCurrentArticle.article.reclame &&
+            !getCurrentArticle.article.reclame.block
+          "
+          class="text-yellow rounded-2xl"
+        >
+          <div v-if="!getCurrentArticle.article.reclame.text" class="text-lg">
+            Данный товар можно приобрести
+            <NuxtLink
+              :to="getCurrentArticle.article.reclame.link"
+              target="_blank"
+              class="text-blue-500 uppercase"
+              >здесь</NuxtLink
+            >
+          </div>
+          <div v-else class="text-lg">
+            <NuxtLink
+              :to="getCurrentArticle.article.reclame.link"
+              target="_blank"
+              class="text-blue-500 uppercase"
+            >
+              {{ getCurrentArticle.article.reclame.text }}
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>

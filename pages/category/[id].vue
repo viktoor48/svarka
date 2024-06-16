@@ -9,14 +9,14 @@
           v-if="getCategory?.articles.length"
         >
           <NuxtLink
-            class="flex hover:scale-[1.02] duration-300 rounded-xl bg-white relative"
+            class="flex flex-col sm:flex-row hover:scale-[1.02] duration-300 rounded-xl bg-white relative"
             v-for="(article, ind) in getArticles"
             :to="`article/${getCategory.id}/${article.id}`"
             :key="ind"
           >
             <div class="basis-2/5 flex-shrink-0">
               <img
-                class="rounded-l-xl h-full object-cover"
+                class="rounded-t-xl sm:rounded-tr-none sm:rounded-l-xl h-full object-cover"
                 :src="article.image"
                 alt=""
               />
@@ -170,5 +170,15 @@ const deleteArticle = async (article) => {
 <style scoped>
 .trash:hover path {
   @apply stroke-orange-300 duration-300;
+}
+
+.trash path {
+    @apply stroke-yellow;
+}
+
+@media (min-width: 640px) {
+  .trash path {
+    @apply stroke-[#1C274C];
+  }
 }
 </style>

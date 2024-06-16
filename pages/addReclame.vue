@@ -31,39 +31,104 @@
               <div class="text-lg">
                 Выберите статью в которой хотите разместить рекламу
               </div>
-              <div
-                class="flex hover:scale-[1.02] duration-300 rounded-xl bg-white relative"
-                v-for="(article, ind) in getArticles"
-                :key="ind"
-                @click="chooseArticle(article.id)"
-                :class="
-                  article.id == choosedArticle
-                    ? 'border-2 border-orange-600'
-                    : ''
-                "
-              >
-                <div class="basis-2/5 flex-shrink-0">
-                  <img
-                    class="rounded-l-xl h-full object-cover"
-                    :src="article.image"
-                    alt=""
-                  />
-                </div>
-                <div class="flex gap-5 flex-col p-5">
-                  <div class="flex items-center">
-                    <div
-                      class="bg-yellow py-1 px-2 text-white rounded-tl-none rounded-2xl"
-                    >
-                      {{ article.category.name }}
+              <div v-for="(article, ind) in getArticles" :key="ind">
+                <div
+                  class="flex hover:scale-[1.02] duration-300 rounded-xl bg-white relative"
+                  @click="chooseArticle(article.id)"
+                  :class="
+                    article.id == choosedArticle
+                      ? 'border-2 border-orange-600'
+                      : ''
+                  "
+                >
+                  <div class="basis-2/5 flex-shrink-0">
+                    <img
+                      class="rounded-l-xl h-full object-cover"
+                      :src="article.image"
+                      alt=""
+                    />
+                  </div>
+                  <div class="flex gap-5 flex-col p-5">
+                    <div class="flex items-center">
+                      <div
+                        class="bg-yellow py-1 px-2 text-white rounded-tl-none rounded-2xl"
+                      >
+                        {{ article.category.name }}
+                      </div>
+                    </div>
+                    <div class="text-black font-bold lg:text-2xl">
+                      {{ article.name }}
+                    </div>
+                    <div class="mt-auto">
+                      {{ formatDateToRussian(article.date) }}
                     </div>
                   </div>
-                  <div class="text-black font-bold lg:text-2xl">
-                    {{ article.name }}
+                </div>
+                <div v-if="article.id == choosedArticle" class="mt-5">
+                  <div>
+                    Выберите блок после которого хотите разместить рекламу:
                   </div>
-                  <div class="mt-auto">{{ formatDateToRussian(article.date) }}</div>
+                  <div v-if="blocks?.blocks.length" class="flex flex-col gap-5 mt-2">
+                    <div
+                      v-for="(block, index) in blocks.blocks"
+                      :key="index"
+                      class="border-2 rounded-2xl border-grey p-2"
+                      @click="chooseBlock(block.id)"
+                      :class="
+                        block.id == choosedBlock
+                          ? 'border-2 border-orange-600'
+                          : ''
+                      "
+                    >
+                      <div class="flex items-baseline justify-between">
+                        <div>
+                          <span class="text-orange-300 text-5xl">{{
+                            index + 1
+                          }}</span
+                          >-й блок
+                        </div>
+                      </div>
+                      <div
+                        v-if="block.type === 'text'"
+                        class="flex flex-col gap-3"
+                      >
+                        <div>Заголовок</div>
+                        <input
+                          type="text"
+                          :name="`block-title-${index}`"
+                          v-model="block.title"
+                          disabled
+                          class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
+                        />
+                        <textarea
+                          class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
+                          cols="30"
+                          rows="5"
+                          v-model="block.content"
+                          disabled
+                        ></textarea>
+                      </div>
+                      <div v-else class="flex flex-col gap-3">
+                        <div>Заголовок</div>
+                        <input
+                          type="text"
+                          disabled
+                          :name="`block-title-${index}`"
+                          v-model="block.title"
+                          class="border w-full border-gray-300 p-2 hover:border-gray-500 active:border-gray-500 outline-none"
+                        />
+                        <div>
+                          <img v-show="block.content" :src="block.content" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-else class="text-red-600">
+                    Блоков нету
+                  </div>
                 </div>
               </div>
-              <div v-if="choosedArticle != null">
+              <div v-if="choosedBlock != null">
                 <form @submit.prevent="sendForm" class="flex flex-col gap-2">
                   <div>
                     <label class="font-bold" for="link"
@@ -115,13 +180,19 @@
 <script setup>
 import { useStore } from "~/stores";
 import { useRouter } from "vue-router";
-import { convertToSlug, getIdFromUrl, formatDateToRussian } from "~/helpers/index";
+import {
+  convertToSlug,
+  getIdFromUrl,
+  formatDateToRussian,
+} from "~/helpers/index";
 
 const store = useStore();
 const router = useRouter();
 const isLoading = ref(true);
 const selectedCategory = ref(null);
 const choosedArticle = ref(null);
+const choosedBlock = ref(null);
+const blocks = ref(null);
 
 const textInput = ref();
 const linkInput = ref();
@@ -165,8 +236,16 @@ watch(selectedCategory, async (newValue) => {
   }
 });
 
-function chooseArticle(id) {
+async function chooseArticle(id) {
   choosedArticle.value = id;
+  await store.fetchBlocks(id);
+  blocks.value = store.getBlocks;
+  console.log(blocks.value);
+}
+
+function chooseBlock(id) {
+  choosedBlock.value = id;
+  console.log(id);
 }
 
 async function sendForm() {
@@ -174,6 +253,7 @@ async function sendForm() {
     article_id: choosedArticle.value,
     link: linkInput.value,
     text: textInput.value,
+    block: choosedBlock.value,
   };
 
   console.log(formData);
